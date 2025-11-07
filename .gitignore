@@ -37,6 +37,7 @@ env/
 # Data files (large datasets)
 data/raw/*.csv
 data/raw/*.json
+!data/raw/poetrydb_poems.json
 data/raw/*.txt
 data/processed/*.pkl
 data/processed/*.npy
@@ -55,9 +56,6 @@ results/embeddings/*.pkl
 # OS
 .DS_Store
 Thumbs.db
-
-# Logs
-*.log
 
 # API keys and secrets
 .env
