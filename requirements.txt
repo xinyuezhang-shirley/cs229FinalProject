@@ -1,0 +1,39 @@
+# Core Data Science and ML Libraries
+numpy==2.3.1
+pandas==2.3.1
+scikit-learn>=1.3.0
+scipy>=1.11.0
+
+# Deep Learning - PyTorch
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+
+# NLP and Transformers (for Sentence-BERT)
+transformers>=4.30.0
+sentence-transformers>=2.2.0
+tokenizers>=0.13.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.14.0
+
+# Music/Audio Processing
+librosa>=0.10.0
+spotipy>=2.23.0
+
+# Web Scraping and Data Collection
+beautifulsoup4==4.13.4
+requests==2.32.3
+yfinance==0.2.65
+
+# Utilities
+tqdm==4.66.5
+python-dateutil==2.9.0.post0
+pytz==2025.2
+jupyter>=1.0.0
+ipykernel>=6.0.0
+
+# Additional useful libraries
+soupsieve==2.7
