@@ -46,6 +46,16 @@ conda env create -f environment.yml
 conda activate cs229
 ```
 
+## Quick local run
+
+Collect songs with lyrics locally (uses your .env in the project root):
+```bash
+python src/data/download_bulk_songs.py \
+	--artists-file data/artists.txt \
+	--target 3000 --songs-per-artist 40 \
+	--output data/processed/combined_songs_large.json
+```
+
 ## Methods
 - **Text Encoder:** Sentence-BERT to vectorize poems and song lyrics
 - **Unsupervised Learning:** Create labels to compare moods of poems and songs
