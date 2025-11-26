@@ -37,6 +37,7 @@ ipykernel>=6.0.0
 
 # Additional useful libraries
 soupsieve==2.7
+pronouncing==0.2.0
 
 # Misc
 python-dotenv
