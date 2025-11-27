@@ -222,8 +222,9 @@ def main():
     song_lines, song_durs, song_titles, song_artists, song_idxs = clean_song_lyrics(songs)
     song_texts = [" ".join(x) for x in song_lines]
 
-    poem_struct_raw = make_poem_struct(poem_lines, args.lines_to-check)
-    song_struct_raw = make_song_struct(song_lines, song_durs, args.lines_to-check)
+    poem_struct_raw = make_poem_struct(poem_lines, args.lines_to_check)
+    song_struct_raw = make_song_struct(song_lines, song_durs, args.lines_to_check)
+
 
     poem_struct = (poem_struct_raw - poem_struct_raw.mean(0)) / poem_struct_raw.std(0)
     song_struct = (song_struct_raw - song_struct_raw.mean(0)) / song_struct_raw.std(0)
