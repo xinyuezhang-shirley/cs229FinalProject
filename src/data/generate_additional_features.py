@@ -220,8 +220,7 @@ def main():
     poem_texts = [" ".join(x) for x in poem_lines]
 
     songs = load_songs(args.songs_path)
-    song_lines, song_durs, song_titles, song_artists, song_idxs =
-        clean_song_lyrics(songs)
+    song_lines, song_durs, song_titles, song_artists, song_idxs = clean_song_lyrics(songs)
     song_texts = [" ".join(x) for x in song_lines]
 
     poem_struct_raw = make_poem_struct(poem_lines, args.lines_to_check)
