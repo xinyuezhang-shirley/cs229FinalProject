@@ -1,22 +1,23 @@
+"""
+Extract structural, semantic, and lexical features for poems and songs.
+"""
+
 from __future__ import annotations
 
 import argparse
 import json
 import re
 from pathlib import Path
-from typing import List
 from functools import lru_cache
 
 import numpy as np
 import pronouncing
 from transformers import pipeline
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_POEMS_PATH = PROJECT_ROOT / "data/raw/poetrydb_poems.json"
 DEFAULT_SONGS_PATH = PROJECT_ROOT / "data/processed/combined_songs_large_fixed.json"
 DEFAULT_OUTPUT_PATH = PROJECT_ROOT / "data/processed/full_features.npz"
-
 
 PUNCT_RE = re.compile(r"[^A-Za-z0-9\s]")
 SPACE_RE = re.compile(r"\s+")
@@ -26,8 +27,7 @@ SECTION_RE = re.compile(
 )
 
 EMOTIONS = ["joy","sadness","anger","fear","love","nostalgia","longing","hope","excitement"]
-THEMES = ["love/romance","heartbreak","nature","death","memory","religion",
-          "war/conflict","childhood","freedom","loneliness"]
+THEMES = ["love/romance","heartbreak","nature","death","memory","religion","war/conflict","childhood","freedom","loneliness"]
 
 SENTIMENT = ["positive","negative"]
 SUBJECTIVITY = ["subjective","objective"]
@@ -37,8 +37,14 @@ NARRATIVE = ["narrative/storytelling","reflective","dialogue-like"]
 IMAGERY = ["visual imagery","auditory imagery","tactile imagery","emotional imagery"]
 
 ALL_GROUPS = [
-    EMOTIONS, THEMES, SENTIMENT, SUBJECTIVITY,
-    CONCRETE, ENERGY, NARRATIVE, IMAGERY
+    EMOTIONS,
+    THEMES,
+    SENTIMENT,
+    SUBJECTIVITY,
+    CONCRETE,
+    ENERGY,
+    NARRATIVE,
+    IMAGERY,
 ]
 
 
@@ -48,17 +54,17 @@ def parse_args():
     p.add_argument("--songs-path", type=Path, default=DEFAULT_SONGS_PATH)
     p.add_argument("--output", type=Path, default=DEFAULT_OUTPUT_PATH)
     p.add_argument("--lines-to-check", type=int, default=4)
-    p.add_argument("--batch-size", type=int, default=8)
+    p.add_argument("--batch-size", type=int, default=16)
     return p.parse_args()
 
 
-def load_poems(p):
-    with p.open("r", encoding="utf-8") as f:
+def load_poems(path):
+    with path.open("r", encoding="utf-8") as f:
         return json.load(f)["items"]
 
 
-def load_songs(p):
-    with p.open("r", encoding="utf-8") as f:
+def load_songs(path):
+    with path.open("r", encoding="utf-8") as f:
         return json.load(f)["items"]
 
 
@@ -85,7 +91,7 @@ def clean_poem_lines(poems):
 
 
 def clean_song_lyrics(songs):
-    out_lines = []
+    lines = []
     durs = []
     titles = []
     artists = []
@@ -106,13 +112,13 @@ def clean_song_lyrics(songs):
         if not L:
             continue
 
-        out_lines.append(L)
+        lines.append(L)
         durs.append((song.get("duration_ms") or 0) / 60000)
         titles.append(song.get("title", ""))
         artists.append(song.get("artist") or song.get("spotify_artist_name", ""))
         idxs.append(i)
 
-    return out_lines, durs, titles, artists, idxs
+    return lines, durs, titles, artists, idxs
 
 
 @lru_cache(maxsize=4096)
@@ -137,6 +143,7 @@ def rhyme_density(lines, L: int):
     ends = [ln.split()[-1] for ln in lines if ln.split()]
     if len(ends) < 2:
         return 0.0
+
     hits = 0
     tot = 0
     for i, w in enumerate(ends):
@@ -147,6 +154,7 @@ def rhyme_density(lines, L: int):
             tot += 1
             if words_rhyme(w, ends[j]):
                 hits += 1
+
     if tot == 0:
         return 0.0
     return hits / tot
@@ -158,7 +166,7 @@ def word_stats(lines):
         return 0, 0.0, 0
     counts = [len(ln.split()) for ln in lines]
     tot = sum(counts)
-    return n, tot/n, tot
+    return n, tot / n, tot
 
 
 def lexical_features(lines: List[str]):
@@ -166,53 +174,62 @@ def lexical_features(lines: List[str]):
     for ln in lines:
         words.extend(ln.split())
     if not words:
-        return np.array([0, 0, 0], float)
+        return np.array([0, 0, 0], dtype=float)
+
     vocab = set(words)
-    ttr = len(vocab) / len(words)
+    vocab_size = len(vocab)
+    ttr = vocab_size / len(words)
     avg_len = sum(len(w) for w in words) / len(words)
-    return np.array([len(vocab), ttr, avg_len], float)
+    return np.array([vocab_size, ttr, avg_len], dtype=float)
 
 
 def make_poem_struct(lines, L):
-    arr = []
+    out = []
     for Ls in lines:
         n, avg, _ = word_stats(Ls)
-        arr.append([avg, n, rhyme_density(Ls, L)])
-    return np.array(arr)
+        out.append([avg, n, rhyme_density(Ls, L)])
+    return np.array(out)
 
 
 def make_song_struct(lines, durs, L):
-    arr = []
+    out = []
     for Ls, d in zip(lines, durs):
         n, avg, tot = word_stats(Ls)
-        wpm = tot/d if d > 0 else 0.0
-        arr.append([avg, n, wpm, rhyme_density(Ls, L)])
-    return np.array(arr)
+        wpm = tot / d if d > 0 else 0.0
+        out.append([avg, n, wpm, rhyme_density(Ls, L)])
+    return np.array(out)
 
 
 def batch_lexical(lines):
     return np.vstack([lexical_features(x) for x in lines])
 
 
-def batch_semantic(texts, clf, groups, bs):
-    out = []
-    for i in range(0, len(texts), bs):
-        chunk = texts[i:i+bs]
-        for t in chunk:
-            feats = []
-            for g in groups:
-                r = clf(t, g, multi_label=True)["scores"]
-                feats.extend(r)
-            out.append(feats)
-    return np.array(out, float)
+def batch_semantic(texts, clf, groups, bs: int):
+    all_feats = []
+
+    for start in range(0, len(texts), bs):
+        batch = texts[start:start+bs]
+        B = len(batch)
+        batch_feats = [[] for _ in range(B)]
+
+        for labels in groups:
+            out = clf(batch, labels, multi_label=True)
+            for i, r in enumerate(out):
+                batch_feats[i].extend(r["scores"])
+
+        all_feats.extend(batch_feats)
+
+    return np.array(all_feats, dtype=float)
 
 
 def main():
     args = parse_args()
 
-    clf = pipeline("zero-shot-classification",
-                   model="joeddav/xlm-roberta-large-xnli",
-                   device=0)
+    clf = pipeline(
+        "zero-shot-classification",
+        model="joeddav/xlm-roberta-large-xnli",
+        device=0
+    )
 
     poems = load_poems(args.poems_path)
     poem_lines, poem_titles, poem_authors = clean_poem_lines(poems)
@@ -225,15 +242,14 @@ def main():
     poem_struct_raw = make_poem_struct(poem_lines, args.lines_to_check)
     song_struct_raw = make_song_struct(song_lines, song_durs, args.lines_to_check)
 
-
     poem_struct = (poem_struct_raw - poem_struct_raw.mean(0)) / poem_struct_raw.std(0)
     song_struct = (song_struct_raw - song_struct_raw.mean(0)) / song_struct_raw.std(0)
 
-    poem_sem = batch_semantic(poem_texts, clf, ALL_GROUPS, args.batch_size)
-    song_sem = batch_semantic(song_texts, clf, ALL_GROUPS, args.batch_size)
-
     poem_lex = batch_lexical(poem_lines)
     song_lex = batch_lexical(song_lines)
+
+    poem_sem = batch_semantic(poem_texts, clf, ALL_GROUPS, args.batch_size)
+    song_sem = batch_semantic(song_texts, clf, ALL_GROUPS, args.batch_size)
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
 
