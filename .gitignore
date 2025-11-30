@@ -32,7 +32,6 @@ env/
 
 # PyTorch
 *.pth
-*.pt
 
 # Data files (large datasets)
 data/raw/*.csv
