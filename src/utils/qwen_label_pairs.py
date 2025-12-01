@@ -21,9 +21,7 @@ import json
 import random
 import re
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional, Union
-
-import numpy as np
+from typing import Any, Dict, Iterable, List, Optional
 
 
 def load_jsonl(path: Path) -> List[Dict[str, Any]]:
@@ -55,103 +53,6 @@ def load_songs(path: Path) -> List[Dict[str, Any]]:
         return data
     # Fallback: wrap into list
     return [data]
-
-
-def compute_composite_similarity(
-    poem_embedding: np.ndarray,
-    song_embedding: np.ndarray,
-    poem_features: Dict[str, np.ndarray],
-    song_features: Dict[str, np.ndarray],
-    weights: Optional[Dict[str, float]] = None,
-) -> Dict[str, float]:
-    """Compute composite similarity between a poem and song using multiple features.
-
-    Args:
-        poem_embedding: Poem embedding vector (768,)
-        song_embedding: Song embedding vector (768,)
-        poem_features: Dict with keys {structural, semantic, lexical}, each as np.ndarray
-        song_features: Dict with keys {structural, semantic, lexical}, each as np.ndarray
-        weights: Optional dict with keys {cosine, semantic, structural, lexical}.
-                 Defaults to {cosine: 0.4, semantic: 0.35, structural: 0.15, lexical: 0.1}
-
-    Returns:
-        Dict with keys: composite, cosine, semantic, structural, lexical (all floats in [0, 1])
-
-    Note:
-        - Poems have 3 structural features, songs have 4 (includes WPM).
-          Only first 3 are compared.
-        - All similarities are normalized to [0, 1] using L2 norm.
-        - Weights are automatically normalized to sum to 1.0.
-    """
-    # Default weights
-    if weights is None:
-        weights = {"cosine": 0.4, "semantic": 0.35, "structural": 0.15, "lexical": 0.1}
-
-    # Normalize weights to sum to 1.0
-    total_weight = sum(weights.values())
-    if total_weight > 0:
-        weights = {k: v / total_weight for k, v in weights.items()}
-    else:
-        weights = {"cosine": 0.25, "semantic": 0.25, "structural": 0.25, "lexical": 0.25}
-
-    # 1. Cosine similarity (embeddings)
-    poem_emb_norm = np.linalg.norm(poem_embedding)
-    song_emb_norm = np.linalg.norm(song_embedding)
-    if poem_emb_norm > 0 and song_emb_norm > 0:
-        cosine_sim = np.dot(poem_embedding, song_embedding) / (poem_emb_norm * song_emb_norm)
-        # Clamp to [0, 1] (cosine can be negative)
-        cosine_sim = (cosine_sim + 1.0) / 2.0
-    else:
-        cosine_sim = 0.0
-
-    # 2. Semantic similarity (42-dim features)
-    poem_sem = poem_features["semantic"]
-    song_sem = song_features["semantic"]
-    poem_sem_norm = np.linalg.norm(poem_sem)
-    song_sem_norm = np.linalg.norm(song_sem)
-    if poem_sem_norm > 0 and song_sem_norm > 0:
-        semantic_sim = np.dot(poem_sem, song_sem) / (poem_sem_norm * song_sem_norm)
-        semantic_sim = (semantic_sim + 1.0) / 2.0
-    else:
-        semantic_sim = 0.0
-
-    # 3. Structural similarity (first 3 features only)
-    poem_struct = poem_features["structural"][:3]
-    song_struct = song_features["structural"][:3]
-    poem_struct_norm = np.linalg.norm(poem_struct)
-    song_struct_norm = np.linalg.norm(song_struct)
-    if poem_struct_norm > 0 and song_struct_norm > 0:
-        structural_sim = np.dot(poem_struct, song_struct) / (poem_struct_norm * song_struct_norm)
-        structural_sim = (structural_sim + 1.0) / 2.0
-    else:
-        structural_sim = 0.0
-
-    # 4. Lexical similarity (3-dim features)
-    poem_lex = poem_features["lexical"]
-    song_lex = song_features["lexical"]
-    poem_lex_norm = np.linalg.norm(poem_lex)
-    song_lex_norm = np.linalg.norm(song_lex)
-    if poem_lex_norm > 0 and song_lex_norm > 0:
-        lexical_sim = np.dot(poem_lex, song_lex) / (poem_lex_norm * song_lex_norm)
-        lexical_sim = (lexical_sim + 1.0) / 2.0
-    else:
-        lexical_sim = 0.0
-
-    # 5. Composite score (weighted average)
-    composite = (
-        weights["cosine"] * cosine_sim
-        + weights["semantic"] * semantic_sim
-        + weights["structural"] * structural_sim
-        + weights["lexical"] * lexical_sim
-    )
-
-    return {
-        "composite": float(composite),
-        "cosine": float(cosine_sim),
-        "semantic": float(semantic_sim),
-        "structural": float(structural_sim),
-        "lexical": float(lexical_sim),
-    }
 
 
 def make_prompt(poem_text: str, song_text: str) -> str:
@@ -210,10 +111,10 @@ def label_pairs(
     use_local_model: bool = False,
     local_model_id: Optional[str] = None,
     device: str = "cpu",
+    max_new_tokens: int = 20,
 ):
     # If using a local model, prepare tokenizer/model id; keep lazy-loading.
     model_obj = None
-    tokenizer_obj = None
     if use_local_model:
         if not local_model_id:
             raise ValueError("--local-model-id required when --use-local-model is set")
@@ -224,7 +125,7 @@ def label_pairs(
         song = p.get("song_text") or p.get("song") or p.get("song_text_raw") or p.get("lyrics") or ""
         prompt = make_prompt(poem, song)
         if use_local_model:
-            resp_text = safe_generate_local(model_obj, tokenizer_obj, prompt, device=device)
+            resp_text = safe_generate_local(model_obj, None, prompt, device=device, max_new_tokens=max_new_tokens)
         else:
             # Placeholder for remote API call. Keep wording simple and neutral.
             raise RuntimeError("Remote API not implemented. Use --use-local-model for local generation.")
@@ -276,6 +177,7 @@ def main():
     p.add_argument("--use-local-model", action="store_true", help="Use a local HF model for scoring.")
     p.add_argument("--local-model-id", type=str, help="HF model id (e.g., gpt2, or a larger model).")
     p.add_argument("--device", type=str, default="cpu", help="Device for model ('cpu' or 'cuda').")
+    p.add_argument("--max-new-tokens", type=int, default=20, help="Max tokens to generate for a score (short).")
     p.add_argument("--generate-negatives", action="store_true", help="Generate random negatives using songs file.")
     p.add_argument("--songs-file", type=Path, help="JSON file with songs (used for negative generation).")
     p.add_argument("--poems-file", type=Path, help="JSON file with poems (used for negative generation).")
@@ -294,7 +196,7 @@ def main():
         if args.input:
             base_pairs = load_jsonl(args.input)
         base_pairs.extend(negs)
-        label_pairs(base_pairs, args.output, use_local_model=args.use_local_model, local_model_id=args.local_model_id, device=args.device)
+        label_pairs(base_pairs, args.output, use_local_model=args.use_local_model, local_model_id=args.local_model_id, device=args.device, max_new_tokens=args.max_new_tokens)
         print(f"Wrote {len(base_pairs)} pairs (including negatives) to {args.output}")
         return
 
@@ -302,7 +204,7 @@ def main():
     if not args.input:
         raise ValueError("--input is required unless --generate-negatives is used")
     pairs = load_jsonl(args.input)
-    label_pairs(pairs, args.output, use_local_model=args.use_local_model, local_model_id=args.local_model_id, device=args.device)
+    label_pairs(pairs, args.output, use_local_model=args.use_local_model, local_model_id=args.local_model_id, device=args.device, max_new_tokens=args.max_new_tokens)
     print(f"Wrote {len(pairs)} pairs to {args.output}")
 
 
