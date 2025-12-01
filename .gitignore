@@ -31,7 +31,6 @@ env/
 *.ipynb_checkpoints/
 
 # PyTorch
-*.pth
 
 # Data files (large datasets)
 data/raw/*.csv
