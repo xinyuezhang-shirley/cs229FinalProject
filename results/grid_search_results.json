@@ -1,0 +1,602 @@
+[
+  {
+    "label": "structure_boost_bs96_t0.70_spe4000",
+    "batch_size": 96,
+    "temperature": 0.7,
+    "weights": {
+      "name": "structure_boost",
+      "alpha": 0.5,
+      "beta_emo": 0.1,
+      "beta_theme": 0.12,
+      "beta_other": 0.08,
+      "gamma": 0.2
+    },
+    "triplet_acc": 0.8043478260869565,
+    "best_loss": 3.755997214998518,
+    "epochs_trained": 219,
+    "train_time_sec": 67.30376505851746,
+    "pos_pairs": 17065,
+    "easy_pairs": 16629,
+    "hard_pairs": 0
+  },
+  {
+    "label": "structure_boost_bs96_t0.50_spe4000",
+    "batch_size": 96,
+    "temperature": 0.5,
+    "weights": {
+      "name": "structure_boost",
+      "alpha": 0.5,
+      "beta_emo": 0.1,
+      "beta_theme": 0.12,
+      "beta_other": 0.08,
+      "gamma": 0.2
+    },
+    "triplet_acc": 0.782608695652174,
+    "best_loss": 3.5135130592754904,
+    "epochs_trained": 217,
+    "train_time_sec": 66.96971011161804,
+    "pos_pairs": 17065,
+    "easy_pairs": 16629,
+    "hard_pairs": 0
+  },
+  {
+    "label": "semantic_push_bs96_t0.70_spe4000",
+    "batch_size": 96,
+    "temperature": 0.7,
+    "weights": {
+      "name": "semantic_push",
+      "alpha": 0.45,
+      "beta_emo": 0.18,
+      "beta_theme": 0.2,
+      "beta_other": 0.07,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.782608695652174,
+    "best_loss": 3.7196720055171424,
+    "epochs_trained": 200,
+    "train_time_sec": 61.294392585754395,
+    "pos_pairs": 17065,
+    "easy_pairs": 17017,
+    "hard_pairs": 0
+  },
+  {
+    "label": "semantic_push_bs128_t0.50_spe4000",
+    "batch_size": 128,
+    "temperature": 0.5,
+    "weights": {
+      "name": "semantic_push",
+      "alpha": 0.45,
+      "beta_emo": 0.18,
+      "beta_theme": 0.2,
+      "beta_other": 0.07,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.7391304347826086,
+    "best_loss": 3.7264606811106207,
+    "epochs_trained": 231,
+    "train_time_sec": 55.5757851600647,
+    "pos_pairs": 17065,
+    "easy_pairs": 17017,
+    "hard_pairs": 0
+  },
+  {
+    "label": "balanced_bs128_t0.70_spe4000",
+    "batch_size": 128,
+    "temperature": 0.7,
+    "weights": {
+      "name": "balanced",
+      "alpha": 0.55,
+      "beta_emo": 0.12,
+      "beta_theme": 0.15,
+      "beta_other": 0.08,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.7391304347826086,
+    "best_loss": 4.014744381606579,
+    "epochs_trained": 174,
+    "train_time_sec": 41.38229036331177,
+    "pos_pairs": 17065,
+    "easy_pairs": 16594,
+    "hard_pairs": 0
+  },
+  {
+    "label": "structure_boost_bs128_t0.70_spe4000",
+    "batch_size": 128,
+    "temperature": 0.7,
+    "weights": {
+      "name": "structure_boost",
+      "alpha": 0.5,
+      "beta_emo": 0.1,
+      "beta_theme": 0.12,
+      "beta_other": 0.08,
+      "gamma": 0.2
+    },
+    "triplet_acc": 0.7391304347826086,
+    "best_loss": 4.011064150184393,
+    "epochs_trained": 219,
+    "train_time_sec": 52.05142307281494,
+    "pos_pairs": 17065,
+    "easy_pairs": 16629,
+    "hard_pairs": 0
+  },
+  {
+    "label": "balanced_bs128_t0.90_spe4000",
+    "batch_size": 128,
+    "temperature": 0.9,
+    "weights": {
+      "name": "balanced",
+      "alpha": 0.55,
+      "beta_emo": 0.12,
+      "beta_theme": 0.15,
+      "beta_other": 0.08,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.7391304347826086,
+    "best_loss": 4.182193738222122,
+    "epochs_trained": 160,
+    "train_time_sec": 37.7926504611969,
+    "pos_pairs": 17065,
+    "easy_pairs": 16594,
+    "hard_pairs": 0
+  },
+  {
+    "label": "semantic_push_bs96_t0.50_spe4000",
+    "batch_size": 96,
+    "temperature": 0.5,
+    "weights": {
+      "name": "semantic_push",
+      "alpha": 0.45,
+      "beta_emo": 0.18,
+      "beta_theme": 0.2,
+      "beta_other": 0.07,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.717391304347826,
+    "best_loss": 3.4770946184794114,
+    "epochs_trained": 198,
+    "train_time_sec": 61.012073040008545,
+    "pos_pairs": 17065,
+    "easy_pairs": 17017,
+    "hard_pairs": 0
+  },
+  {
+    "label": "balanced_bs96_t0.90_spe4000",
+    "batch_size": 96,
+    "temperature": 0.9,
+    "weights": {
+      "name": "balanced",
+      "alpha": 0.55,
+      "beta_emo": 0.12,
+      "beta_theme": 0.15,
+      "beta_other": 0.08,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.717391304347826,
+    "best_loss": 3.9154281303996137,
+    "epochs_trained": 233,
+    "train_time_sec": 71.23494338989258,
+    "pos_pairs": 17065,
+    "easy_pairs": 16594,
+    "hard_pairs": 0
+  },
+  {
+    "label": "other_focus_bs96_t0.90_spe4000",
+    "batch_size": 96,
+    "temperature": 0.9,
+    "weights": {
+      "name": "other_focus",
+      "alpha": 0.5,
+      "beta_emo": 0.1,
+      "beta_theme": 0.12,
+      "beta_other": 0.18,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.717391304347826,
+    "best_loss": 3.92544401202883,
+    "epochs_trained": 171,
+    "train_time_sec": 52.53147602081299,
+    "pos_pairs": 17065,
+    "easy_pairs": 17025,
+    "hard_pairs": 0
+  },
+  {
+    "label": "balanced_bs128_t0.50_spe4000",
+    "batch_size": 128,
+    "temperature": 0.5,
+    "weights": {
+      "name": "balanced",
+      "alpha": 0.55,
+      "beta_emo": 0.12,
+      "beta_theme": 0.15,
+      "beta_other": 0.08,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.717391304347826,
+    "best_loss": 3.7472141169011595,
+    "epochs_trained": 250,
+    "train_time_sec": 60.26600360870361,
+    "pos_pairs": 17065,
+    "easy_pairs": 16594,
+    "hard_pairs": 0
+  },
+  {
+    "label": "other_focus_bs128_t0.70_spe4000",
+    "batch_size": 128,
+    "temperature": 0.7,
+    "weights": {
+      "name": "other_focus",
+      "alpha": 0.5,
+      "beta_emo": 0.1,
+      "beta_theme": 0.12,
+      "beta_other": 0.18,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.717391304347826,
+    "best_loss": 4.014627725630999,
+    "epochs_trained": 173,
+    "train_time_sec": 41.15769624710083,
+    "pos_pairs": 17065,
+    "easy_pairs": 17025,
+    "hard_pairs": 0
+  },
+  {
+    "label": "semantic_push_bs128_t0.90_spe4000",
+    "batch_size": 128,
+    "temperature": 0.9,
+    "weights": {
+      "name": "semantic_push",
+      "alpha": 0.45,
+      "beta_emo": 0.18,
+      "beta_theme": 0.2,
+      "beta_other": 0.07,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.717391304347826,
+    "best_loss": 4.129457688331604,
+    "epochs_trained": 210,
+    "train_time_sec": 49.337148904800415,
+    "pos_pairs": 17065,
+    "easy_pairs": 17017,
+    "hard_pairs": 0
+  },
+  {
+    "label": "structure_boost_bs128_t0.90_spe4000",
+    "batch_size": 128,
+    "temperature": 0.9,
+    "weights": {
+      "name": "structure_boost",
+      "alpha": 0.5,
+      "beta_emo": 0.1,
+      "beta_theme": 0.12,
+      "beta_other": 0.08,
+      "gamma": 0.2
+    },
+    "triplet_acc": 0.717391304347826,
+    "best_loss": 4.171381167322397,
+    "epochs_trained": 250,
+    "train_time_sec": 58.731971979141235,
+    "pos_pairs": 17065,
+    "easy_pairs": 16629,
+    "hard_pairs": 0
+  },
+  {
+    "label": "other_focus_bs128_t0.90_spe4000",
+    "batch_size": 128,
+    "temperature": 0.9,
+    "weights": {
+      "name": "other_focus",
+      "alpha": 0.5,
+      "beta_emo": 0.1,
+      "beta_theme": 0.12,
+      "beta_other": 0.18,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.717391304347826,
+    "best_loss": 4.1800379902124405,
+    "epochs_trained": 170,
+    "train_time_sec": 39.94558024406433,
+    "pos_pairs": 17065,
+    "easy_pairs": 17025,
+    "hard_pairs": 0
+  },
+  {
+    "label": "other_focus_bs96_t0.70_spe4000",
+    "batch_size": 96,
+    "temperature": 0.7,
+    "weights": {
+      "name": "other_focus",
+      "alpha": 0.5,
+      "beta_emo": 0.1,
+      "beta_theme": 0.12,
+      "beta_other": 0.18,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.6956521739130435,
+    "best_loss": 3.7605837663014734,
+    "epochs_trained": 173,
+    "train_time_sec": 53.159117460250854,
+    "pos_pairs": 17065,
+    "easy_pairs": 17025,
+    "hard_pairs": 0
+  },
+  {
+    "label": "mpnet_heavy_bs96_t0.90_spe4000",
+    "batch_size": 96,
+    "temperature": 0.9,
+    "weights": {
+      "name": "mpnet_heavy",
+      "alpha": 0.65,
+      "beta_emo": 0.08,
+      "beta_theme": 0.12,
+      "beta_other": 0.05,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.6956521739130435,
+    "best_loss": 3.936718992959886,
+    "epochs_trained": 189,
+    "train_time_sec": 58.129634141922,
+    "pos_pairs": 17065,
+    "easy_pairs": 14517,
+    "hard_pairs": 0
+  },
+  {
+    "label": "semantic_push_bs96_t0.90_spe4000",
+    "batch_size": 96,
+    "temperature": 0.9,
+    "weights": {
+      "name": "semantic_push",
+      "alpha": 0.45,
+      "beta_emo": 0.18,
+      "beta_theme": 0.2,
+      "beta_other": 0.07,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.6956521739130435,
+    "best_loss": 3.8806014248303007,
+    "epochs_trained": 171,
+    "train_time_sec": 52.77328562736511,
+    "pos_pairs": 17065,
+    "easy_pairs": 17017,
+    "hard_pairs": 0
+  },
+  {
+    "label": "mpnet_heavy_bs128_t0.70_spe4000",
+    "batch_size": 128,
+    "temperature": 0.7,
+    "weights": {
+      "name": "mpnet_heavy",
+      "alpha": 0.65,
+      "beta_emo": 0.08,
+      "beta_theme": 0.12,
+      "beta_other": 0.05,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.6956521739130435,
+    "best_loss": 4.01946596801281,
+    "epochs_trained": 221,
+    "train_time_sec": 52.14320921897888,
+    "pos_pairs": 17065,
+    "easy_pairs": 14517,
+    "hard_pairs": 0
+  },
+  {
+    "label": "semantic_push_bs128_t0.70_spe4000",
+    "batch_size": 128,
+    "temperature": 0.7,
+    "weights": {
+      "name": "semantic_push",
+      "alpha": 0.45,
+      "beta_emo": 0.18,
+      "beta_theme": 0.2,
+      "beta_other": 0.07,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.6956521739130435,
+    "best_loss": 3.973157611489296,
+    "epochs_trained": 205,
+    "train_time_sec": 48.75442814826965,
+    "pos_pairs": 17065,
+    "easy_pairs": 17017,
+    "hard_pairs": 0
+  },
+  {
+    "label": "mpnet_heavy_bs96_t0.50_spe4000",
+    "batch_size": 96,
+    "temperature": 0.5,
+    "weights": {
+      "name": "mpnet_heavy",
+      "alpha": 0.65,
+      "beta_emo": 0.08,
+      "beta_theme": 0.12,
+      "beta_other": 0.05,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.6739130434782609,
+    "best_loss": 3.5113790057954333,
+    "epochs_trained": 250,
+    "train_time_sec": 77.10976338386536,
+    "pos_pairs": 17065,
+    "easy_pairs": 14517,
+    "hard_pairs": 0
+  },
+  {
+    "label": "structure_boost_bs96_t0.90_spe4000",
+    "batch_size": 96,
+    "temperature": 0.9,
+    "weights": {
+      "name": "structure_boost",
+      "alpha": 0.5,
+      "beta_emo": 0.1,
+      "beta_theme": 0.12,
+      "beta_other": 0.08,
+      "gamma": 0.2
+    },
+    "triplet_acc": 0.6739130434782609,
+    "best_loss": 3.933560191449665,
+    "epochs_trained": 146,
+    "train_time_sec": 44.77324295043945,
+    "pos_pairs": 17065,
+    "easy_pairs": 16629,
+    "hard_pairs": 0
+  },
+  {
+    "label": "mpnet_heavy_bs128_t0.50_spe4000",
+    "batch_size": 128,
+    "temperature": 0.5,
+    "weights": {
+      "name": "mpnet_heavy",
+      "alpha": 0.65,
+      "beta_emo": 0.08,
+      "beta_theme": 0.12,
+      "beta_other": 0.05,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.6739130434782609,
+    "best_loss": 3.7725537799298765,
+    "epochs_trained": 223,
+    "train_time_sec": 53.62779712677002,
+    "pos_pairs": 17065,
+    "easy_pairs": 14517,
+    "hard_pairs": 0
+  },
+  {
+    "label": "structure_boost_bs128_t0.50_spe4000",
+    "batch_size": 128,
+    "temperature": 0.5,
+    "weights": {
+      "name": "structure_boost",
+      "alpha": 0.5,
+      "beta_emo": 0.1,
+      "beta_theme": 0.12,
+      "beta_other": 0.08,
+      "gamma": 0.2
+    },
+    "triplet_acc": 0.6739130434782609,
+    "best_loss": 3.758024171739817,
+    "epochs_trained": 250,
+    "train_time_sec": 59.05505967140198,
+    "pos_pairs": 17065,
+    "easy_pairs": 16629,
+    "hard_pairs": 0
+  },
+  {
+    "label": "other_focus_bs128_t0.50_spe4000",
+    "batch_size": 128,
+    "temperature": 0.5,
+    "weights": {
+      "name": "other_focus",
+      "alpha": 0.5,
+      "beta_emo": 0.1,
+      "beta_theme": 0.12,
+      "beta_other": 0.18,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.6739130434782609,
+    "best_loss": 3.7585437536239623,
+    "epochs_trained": 231,
+    "train_time_sec": 54.52318978309631,
+    "pos_pairs": 17065,
+    "easy_pairs": 17025,
+    "hard_pairs": 0
+  },
+  {
+    "label": "mpnet_heavy_bs128_t0.90_spe4000",
+    "batch_size": 128,
+    "temperature": 0.9,
+    "weights": {
+      "name": "mpnet_heavy",
+      "alpha": 0.65,
+      "beta_emo": 0.08,
+      "beta_theme": 0.12,
+      "beta_other": 0.05,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.6739130434782609,
+    "best_loss": 4.157447336614132,
+    "epochs_trained": 250,
+    "train_time_sec": 58.96701216697693,
+    "pos_pairs": 17065,
+    "easy_pairs": 14517,
+    "hard_pairs": 0
+  },
+  {
+    "label": "balanced_bs96_t0.50_spe4000",
+    "batch_size": 96,
+    "temperature": 0.5,
+    "weights": {
+      "name": "balanced",
+      "alpha": 0.55,
+      "beta_emo": 0.12,
+      "beta_theme": 0.15,
+      "beta_other": 0.08,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.6521739130434783,
+    "best_loss": 3.4962635619299753,
+    "epochs_trained": 250,
+    "train_time_sec": 76.72568988800049,
+    "pos_pairs": 17065,
+    "easy_pairs": 16594,
+    "hard_pairs": 0
+  },
+  {
+    "label": "mpnet_heavy_bs96_t0.70_spe4000",
+    "batch_size": 96,
+    "temperature": 0.7,
+    "weights": {
+      "name": "mpnet_heavy",
+      "alpha": 0.65,
+      "beta_emo": 0.08,
+      "beta_theme": 0.12,
+      "beta_other": 0.05,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.6521739130434783,
+    "best_loss": 3.7644555404072713,
+    "epochs_trained": 222,
+    "train_time_sec": 68.16240501403809,
+    "pos_pairs": 17065,
+    "easy_pairs": 14517,
+    "hard_pairs": 0
+  },
+  {
+    "label": "balanced_bs96_t0.70_spe4000",
+    "batch_size": 96,
+    "temperature": 0.7,
+    "weights": {
+      "name": "balanced",
+      "alpha": 0.55,
+      "beta_emo": 0.12,
+      "beta_theme": 0.15,
+      "beta_other": 0.08,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.6521739130434783,
+    "best_loss": 3.7465383790788196,
+    "epochs_trained": 250,
+    "train_time_sec": 76.97196173667908,
+    "pos_pairs": 17065,
+    "easy_pairs": 16594,
+    "hard_pairs": 0
+  },
+  {
+    "label": "other_focus_bs96_t0.50_spe4000",
+    "batch_size": 96,
+    "temperature": 0.5,
+    "weights": {
+      "name": "other_focus",
+      "alpha": 0.5,
+      "beta_emo": 0.1,
+      "beta_theme": 0.12,
+      "beta_other": 0.18,
+      "gamma": 0.1
+    },
+    "triplet_acc": 0.6086956521739131,
+    "best_loss": 3.4974482473872954,
+    "epochs_trained": 250,
+    "train_time_sec": 76.87454104423523,
+    "pos_pairs": 17065,
+    "easy_pairs": 17025,
+    "hard_pairs": 0
+  }
+]
