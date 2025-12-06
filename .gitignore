@@ -4,58 +4,27 @@ __pycache__/
 *$py.class
 *.so
 .Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Virtual environments
-venv/
-ENV/
+.env
 env/
+venv/
 .venv
 
-# Jupyter Notebook
-.ipynb_checkpoints
-*.ipynb_checkpoints/
-
-# PyTorch
-
-# Data files (large datasets)
-data/raw/*.csv
-data/raw/*.json
-!data/raw/poetrydb_poems.json
-data/raw/*.txt
-data/processed/*.pkl
-data/processed/*.npy
-
-# Results
-results/embeddings/*.npy
-results/embeddings/*.pkl
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
-*~
 
 # OS
 .DS_Store
 Thumbs.db
 
-# API keys and secrets
-.env
-config/secrets.json
-*.key
+# Logs
+*.log
+
+# Temporary
+*.tmp

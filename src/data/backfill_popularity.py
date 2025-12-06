@@ -3,6 +3,7 @@
 This script loads a songs JSON file and fetches missing popularity scores
 from Spotify by searching for each song.
 """
+
 from __future__ import annotations
 import os
 import json
